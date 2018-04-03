@@ -1,0 +1,6 @@
+# Python:
+*.txt
+*.py[cod]
+dist
+build
+

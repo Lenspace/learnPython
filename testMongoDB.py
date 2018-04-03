@@ -8,5 +8,15 @@ client = MongoClient()
 
 db = client.test # 连接test数据库，没有则自动创建
 my_set = db.set  # 使用set集合，没有则自动创建
-my_set.insert({'name':'yy', 'age':18})
-my_set.insert({'name':'xx', 'mb':15, 'age':22})
+#my_set.insert({'name':'yy', 'age':18})
+#my_set.insert({'name':'xx', 'mb':15, 'age':22})
+
+data = my_set.find()
+print(data)
+
+for i in data:
+    print(i['name'])
+    print(i)
+    i.pop('_id')
+    print(i)
+

@@ -9,18 +9,21 @@ from fake_useragent import UserAgent
 ua = UserAgent()
 
 # 拉勾连续访问，第六页就有问题
-# 明天试一下，如果速度慢一些可以么
+# 明天试一下，如果速度慢一些可以么---->可以，一分钟5次是可以的
+# 不知道带上Refer能否突破这个限制
 # 是不是有个Refer的问题？那个会带着上一次的url的
-header = {
-    'Host' : 'www.lagou.com',
-    'User-Agent' : ua.random,#'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
-}
+
 
 def mylog(str):
     print(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())) + ': ' + str)
 
 def getHTMLText(url):
     try:
+        header = {
+            'Host': 'www.lagou.com',
+            'User-Agent': ua.random,
+            # 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+        }
         mylog(header['User-Agent'])
         r = requests.get(url, headers=header, timeout=20)
         r.raise_for_status()
@@ -54,6 +57,7 @@ def scanPages(url, page):
         mylog('当前页面共有元素{0}'.format(length))
         if length == 0:
             print(html)
+            continue
         i = 0
         while i < length:
             dict = {}
@@ -68,9 +72,9 @@ def scanPages(url, page):
             mg_job_table.insert(dict)
             i += 1
         mylog('开始等待')
-        time.sleep(10)
+        time.sleep(12)
         mylog('等待结束')
 
 if __name__ == '__main__':
     url = 'https://www.lagou.com/zhaopin/C++/'
-    scanPages(url, 30)
+    scanPages(url, 10)
