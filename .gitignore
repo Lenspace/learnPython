@@ -3,4 +3,5 @@
 *.py[cod]
 dist
 build
+.idea/*
 
